@@ -1,4 +1,16 @@
 
+class PiView {
+    constructor(el, klass) {
+        this.$el = el;
+
+        this.template = klass.template;
+    }
+
+    render() {
+        this.$el.innerHTML = this.template;
+    }
+}
+
 class PiJS {
     constructor() {
         this.classes = {};
@@ -7,6 +19,16 @@ class PiJS {
 
     init(options) {
         this.$el = document.querySelector(options.el);
+
+        for (let klass in this.classes) {
+            let els = this.$el.querySelectorAll(this.classes[klass].tag);
+
+            els.forEach(el => {
+                this.viewInstances.push(
+                    new PiView(el, this.classes[klass])
+                );
+            });
+        }
 
         this.render();
 
@@ -22,13 +44,7 @@ class PiJS {
     }
 
     render() {
-        for (let klass in this.classes) {
-            let els = this.$el.querySelectorAll(this.classes[klass].tag);
-
-            els.forEach(el => {
-                el.innerHTML = this.classes[klass].template;
-            });
-        }
+        this.viewInstances.forEach(view => view.render());
     }
 }
 
