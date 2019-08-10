@@ -3,11 +3,11 @@ class PiView {
     constructor(el, klass) {
         this.$el = el;
 
-        this.template = klass.template;
+        this.$el.innerHTML = klass.template;
     }
 
     render() {
-        this.$el.innerHTML = this.template;
+        return this.$el;
     }
 }
 
