@@ -20,8 +20,16 @@ class PiJS {
     init(options) {
         this.$el = document.querySelector(options.el);
 
+        this.createViews(this.$el);
+
+        this.render();
+
+        return this;
+    }
+
+    createViews(element) {
         for (let klass in this.classes) {
-            let els = this.$el.querySelectorAll(this.classes[klass].tag);
+            let els = element.querySelectorAll(this.classes[klass].tag);
 
             els.forEach(el => {
                 this.viewInstances.push(
@@ -29,10 +37,6 @@ class PiJS {
                 );
             });
         }
-
-        this.render();
-
-        return this;
     }
 
     register(options) {
