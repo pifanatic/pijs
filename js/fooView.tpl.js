@@ -1,5 +1,6 @@
 let tpl = `
-<div>HALLO</div>
+<div>Hello from FooView</div>
+<foo-sub></foo-sub>
 `;
 
 export default tpl;
