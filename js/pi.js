@@ -32,9 +32,11 @@ class PiJS {
             let els = element.querySelectorAll(this.classes[klass].tag);
 
             els.forEach(el => {
-                this.viewInstances.push(
-                    new PiView(el, this.classes[klass])
-                );
+                let view = new PiView(el, this.classes[klass]);
+
+                this.viewInstances.push(view);
+
+                this.createViews(view.$el);
             });
         }
     }
