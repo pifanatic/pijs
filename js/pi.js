@@ -31,7 +31,7 @@ class PiJS {
         let viewsToCreate = [];
 
         for (let klass in this.classes) {
-            let els = element.querySelectorAll(this.classes[klass].tag);
+            let els = element.querySelectorAll(this.classes[klass].tagName);
 
             els.forEach(el => {
                 viewsToCreate.push({

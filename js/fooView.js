@@ -3,6 +3,6 @@ import tpl  from "./fooView.tpl.js";
 
 PiJS.register({
     name: "FooView",
-    tag: "foo",
+    tagName: "foo",
     template: tpl
 });
