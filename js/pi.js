@@ -28,17 +28,26 @@ class PiJS {
     }
 
     createViews(element) {
+        let viewsToCreate = [];
+
         for (let klass in this.classes) {
             let els = element.querySelectorAll(this.classes[klass].tag);
 
             els.forEach(el => {
-                let view = new PiView(el, this.classes[klass]);
-
-                this.viewInstances.push(view);
-
-                this.createViews(view.$el);
+                viewsToCreate.push({
+                    el: el,
+                    klass: this.classes[klass]
+                });
             });
         }
+
+        viewsToCreate.forEach(el => {
+            let view = new PiView(el.el, el.klass);
+
+            this.viewInstances.push(view);
+
+            this.createViews(view.$el);
+        });
     }
 
     register(options) {
