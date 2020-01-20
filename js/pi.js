@@ -1,13 +1,29 @@
+let count = 0;
 
 class PiView {
     constructor(el, klass) {
         this.$el = el;
+        this.klass = klass;
+        this.$basicEl = this.$el.cloneNode(true);
+        this.subviews = [];
 
-        this.$el.innerHTML = klass.template;
+        this.$el.innerHTML = this.template;
+
+        pijs.createViews(this.$el, this);
     }
 
     render() {
+        // this.$el.innerHTML = this.template;
         return this.$el;
+    }
+
+    addSubview(view, viewEl) {
+        viewEl.addAttribute("pi-id", ++count);
+
+        this.subviews.push({
+            view: view,
+            id: count
+        });
     }
 }
 
@@ -27,7 +43,7 @@ class PiJS {
         return this;
     }
 
-    createViews(element) {
+    createViews(element, parentView) {
         let viewsToCreate = [];
 
         for (let klass in this.classes) {
@@ -44,9 +60,13 @@ class PiJS {
         viewsToCreate.forEach(el => {
             let view = new PiView(el.el, el.klass);
 
-            this.viewInstances.push(view);
+            if (parentView) {
+                parentView.addSubview(view);
+            } else {
+                this.viewInstances.push(view);
+            }
 
-            this.createViews(view.$el);
+            this.createViews(view.$el, view);
         });
     }
 
@@ -63,4 +83,6 @@ class PiJS {
     }
 }
 
-export default new PiJS();
+let pijs = new PiJS();
+
+export default pijs;
