@@ -2,36 +2,63 @@
 class PiView {
     constructor(el, klass) {
         this.$el = el;
+        this.klass = klass;
+        this.subviews = [];
 
-        this.$el.innerHTML = klass.template;
+        pijs._createViews(this.klass.template, this);
     }
 
     render() {
+        this.$el = this.klass.template.cloneNode(true);
+
+        this.subviews.forEach(subview => {
+            let $destEl = this.$el.querySelectorAll(`${subview.view.klass.tagName}`)[subview.index];
+            $destEl.replaceWith(subview.view.render());
+        });
+
         return this.$el;
+    }
+
+    addSubview(opts) {
+        this.subviews.push(opts);
     }
 }
 
 class PiJS {
     constructor() {
         this.classes = {};
-        this.viewInstances = [];
     }
 
     init(options) {
         this.$el = document.querySelector(options.el);
 
-        this.createViews(this.$el);
+        this.startView = new PiView(this.$el, this.classes[options.startView]);
 
         this.render();
 
         return this;
     }
 
-    createViews(element) {
+    _createViews($el, parentView) {
+        let viewsToCreate = this._parseHTML($el);
+
+        viewsToCreate.forEach((el, index) => {
+            let view = new PiView(el.el, el.klass);
+
+            parentView.addSubview({
+                view: view,
+                index: index
+            });
+
+            this._createViews(view.$el, view);
+        });
+    }
+
+    _parseHTML($el) {
         let viewsToCreate = [];
 
         for (let klass in this.classes) {
-            let els = element.querySelectorAll(this.classes[klass].tagName);
+            let els = $el.querySelectorAll(this.classes[klass].tagName);
 
             els.forEach(el => {
                 viewsToCreate.push({
@@ -41,26 +68,29 @@ class PiJS {
             });
         }
 
-        viewsToCreate.forEach(el => {
-            let view = new PiView(el.el, el.klass);
-
-            this.viewInstances.push(view);
-
-            this.createViews(view.$el);
-        });
+        return viewsToCreate;
     }
 
     register(options) {
+        let $templateEl;
+
         if (this.classes[options.name]) {
             throw new Error(`Class ${options.name} has already been registered!`);
         }
 
         this.classes[options.name] = options;
+
+        $templateEl = document.createElement(options.tagName);
+        $templateEl.innerHTML = options.template;
+
+        this.classes[options.name].template = $templateEl;
     }
 
     render() {
-        this.viewInstances.forEach(view => view.render());
+        this.$el.append(this.startView.render());
     }
 }
 
-export default new PiJS();
+let pijs = new PiJS();
+
+export default pijs;

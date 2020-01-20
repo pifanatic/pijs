@@ -1,5 +1,6 @@
 import PiJS from "./pi.js";
 
 PiJS.init({
-    el: "#foo"
+    el: "#foo",
+    startView: "FooView"
 });
