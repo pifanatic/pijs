@@ -7,6 +7,10 @@ class PiView {
         this._attributes = {};
 
         pijs._createViews(this.klass.template, this);
+
+        if (this.klass.init) {
+            this.klass.init.call(this);
+        }
     }
 
     render() {
