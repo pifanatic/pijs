@@ -4,6 +4,7 @@ class PiView {
         this.$el = el;
         this.klass = klass;
         this.subviews = [];
+        this._attributes = {};
 
         pijs._createViews(this.klass.template, this);
     }
@@ -21,6 +22,14 @@ class PiView {
 
     addSubview(opts) {
         this.subviews.push(opts);
+    }
+
+    get(attribute) {
+        return this._attributes[attribute];
+    }
+
+    set(attribute, value) {
+        this._attributes[attribute] = value;
     }
 }
 
