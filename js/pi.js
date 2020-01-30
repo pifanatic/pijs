@@ -12,6 +12,8 @@ class PiView {
     render() {
         this.$el = this.klass.template.cloneNode(true);
 
+        this._fillPlaceholders();
+
         this.subviews.forEach(subview => {
             let $destEl = this.$el.querySelectorAll(`${subview.view.klass.tagName}`)[subview.index];
             $destEl.replaceWith(subview.view.render());
@@ -30,6 +32,18 @@ class PiView {
 
     set(attribute, value) {
         this._attributes[attribute] = value;
+    }
+
+    _fillPlaceholders() {
+        let regex = /\{\{\s*(\w*)\s*\}\}/,
+            match;
+
+        while (match = this.$el.innerHTML.match(regex)) {
+            this.$el.innerHTML = this.$el.innerHTML.replace(
+                match[0],
+                this.get(match[1])
+            );
+        }
     }
 }
 
