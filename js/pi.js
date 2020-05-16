@@ -43,6 +43,8 @@ class PiView {
 
     set(attribute, value) {
         this._attributes[attribute] = value;
+
+        this.render();
     }
 
     _fillPlaceholders($el) {
