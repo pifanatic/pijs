@@ -66,7 +66,19 @@ class PiJS {
     }
 
     init(options) {
+        if (!options) {
+            throw new Error("PiJS - Initialization failed: no options given!");
+        }
+
+        if (!options.el) {
+            throw new Error("PiJS - Initialization failed: no anchor element given!");
+        }
+
         this.$el = document.querySelector(options.el);
+
+        if (!this.$el) {
+            throw new Error(`PiJS - Initialization failed: anchor element '${options.el}' not in DOM`);
+        }
 
         this.startView = new PiView(this.classes[options.startView]);
 
