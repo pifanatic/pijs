@@ -97,8 +97,6 @@ class PiJS {
                 view: view,
                 index: index
             });
-
-            this._createViews(view.$el, view);
         });
     }
 
