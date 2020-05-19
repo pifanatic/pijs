@@ -80,9 +80,18 @@ class PiJS {
             throw new Error(`PiJS - Initialization failed: anchor element '${options.el}' not in DOM`);
         }
 
-        this.startView = new PiView(this.classes[options.startView]);
+        this.register({
+            name: "__main__",
+            template: this.$el.innerHTML,
+            tagName: "__main__"
+        });
 
-        this.$el.appendChild(this.startView.render());
+        this.mainView = new PiView(this.classes["__main__"]);
+
+        this.$el.innerHTML = "";
+        while (this.mainView.$el.childNodes.length > 0) {
+            this.$el.appendChild(this.mainView.$el.childNodes[0]);
+        }
 
         return this;
     }
