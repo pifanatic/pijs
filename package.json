@@ -1,0 +1,25 @@
+{
+  "name": "pijs",
+  "version": "0.0.1",
+  "description": "a small JavaScript framework",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pifanatic/pijs.git"
+  },
+  "keywords": [
+    "javascript"
+  ],
+  "author": "Kai Mörker",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pifanatic/pijs/issues"
+  },
+  "homepage": "https://github.com/pifanatic/pijs#readme"
+}
