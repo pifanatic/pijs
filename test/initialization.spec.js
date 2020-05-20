@@ -27,5 +27,5 @@ describe("Initialization", function() {
         assert.doesNotThrow(() => {
             PiJS.init({ el: "#foo" });
         });
-    })
+    });
 });
