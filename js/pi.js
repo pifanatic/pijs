@@ -140,6 +140,10 @@ class PiJS {
 
         this.classes[options.name].template = $templateEl;
     }
+
+    unregister(view) {
+        delete this.classes[view];
+    }
 }
 
 let pijs = new PiJS();
