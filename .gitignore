@@ -2,3 +2,4 @@ js/foo*
 js/main.js
 index.html
 node_modules/
+coverage/

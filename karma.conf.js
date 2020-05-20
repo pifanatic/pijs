@@ -11,7 +11,16 @@ module.exports = function(config) {
                 type: "module"
             }
         ],
-        reporters: ["progress"],
+        preprocessors: {
+            "js/pi.js": ["coverage"]
+        },
+        reporters: ["progress", "coverage"],
+        coverageReporter: {
+            reporters: [
+                { type: "text" },
+                { type: "html" }
+            ]
+        },
         singleRun: true,
         port: 9876,  // karma web server port
         colors: true,
