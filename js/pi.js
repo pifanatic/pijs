@@ -129,8 +129,20 @@ class PiJS {
     register(options) {
         let $templateEl;
 
+        if (!options.name) {
+            throw new Error("PiJS - No 'name' given in view registration!");
+        }
+
+        if (!options.tagName) {
+            throw new Error("PiJS - No 'tagName' given in view registration!");
+        }
+
+        if (typeof options.template === "undefined") {
+            throw new Error("PiJS - No 'template' given in view registration!");
+        }
+
         if (this.classes[options.name]) {
-            throw new Error(`Class ${options.name} has already been registered!`);
+            throw new Error(`PiJS - '${options.name}' has already been registered!`);
         }
 
         this.classes[options.name] = options;
