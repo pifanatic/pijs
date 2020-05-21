@@ -2,21 +2,21 @@ import PiJS from "../js/pi.js";
 
 describe("Initialization", function() {
     it("should fail without options", () => {
-        assert.throws(() => {
+        expect(() => {
             PiJS.init();
-        }, "PiJS - Initialization failed: no options given!");
+        }).to.throw("PiJS - Initialization failed: no options given!");
     });
 
     it("should fail without anchor element", () => {
-        assert.throws(() => {
+        expect(() => {
             PiJS.init({});
-        }, "PiJS - Initialization failed: no anchor element given!");
+        }).to.throw("PiJS - Initialization failed: no anchor element given!");
     });
 
     it("should fail if anchor element is not in DOM", () => {
-        assert.throws(() => {
+        expect(() => {
             PiJS.init({ el: "#notThere" });
-        }, "PiJS - Initialization failed: anchor element '#notThere' not in DOM");
+        }).to.throw("PiJS - Initialization failed: anchor element '#notThere' not in DOM");
     });
 
     it("should not fail with valid parameters", () => {
@@ -24,8 +24,8 @@ describe("Initialization", function() {
         el.setAttribute("id", "foo");
         document.body.appendChild(el);
 
-        assert.doesNotThrow(() => {
+        expect(() => {
             PiJS.init({ el: "#foo" });
-        });
+        }).not.to.throw();
     });
 });

@@ -7,30 +7,30 @@ describe("View", () => {
 
     describe("Registration", () => {
         it("should fail without 'name'", () => {
-            assert.throws(() => {
+            expect(() => {
                 PiJS.register({
                     tagName: "foo",
                     template: "<div></div>"
                 });
-            }, "PiJS - No 'name' given in view registration!");
+            }).to.throw("PiJS - No 'name' given in view registration!");
         });
 
         it("should fail without 'tagName'", () => {
-            assert.throws(() => {
+            expect(() => {
                 PiJS.register({
                     name: "FooView",
                     template: "<div></div>"
                 });
-            }, "PiJS - No 'tagName' given in view registration!");
+            }).to.throw("PiJS - No 'tagName' given in view registration!");
         });
 
         it("should fail without 'template'", () => {
-            assert.throws(() => {
+            expect(() => {
                 PiJS.register({
                     name: "FooView",
                     tagName: "foo"
                 });
-            }, "PiJS - No 'template' given in view registration!");
+            }).to.throw("PiJS - No 'template' given in view registration!");
         });
 
         it("should succeed with valid parameters", () => {
@@ -40,7 +40,7 @@ describe("View", () => {
                 template: "<div></div>"
             });
 
-            assert.isDefined(PiJS.classes.FooView);
+            expect(PiJS.classes.FooView).to.exist;
         });
 
         it("should set correct name", () => {
@@ -50,7 +50,7 @@ describe("View", () => {
                 template: "<div></div>"
             });
 
-            assert.equal(PiJS.classes.FooView.name, "FooView");
+            expect(PiJS.classes.FooView.name).to.equal("FooView");
         });
 
         it("should set correct tagName", () => {
@@ -60,7 +60,7 @@ describe("View", () => {
                 template: "<div></div>"
             });
 
-            assert.equal(PiJS.classes.FooView.tagName, "foo");
+            expect(PiJS.classes.FooView.tagName).to.equal("foo");
         });
 
         it("should convert template string to HTMLElement", () => {
@@ -70,7 +70,7 @@ describe("View", () => {
                 template: "<div></div>"
             });
 
-            assert.instanceOf(PiJS.classes.FooView.template, HTMLElement);
+            expect(PiJS.classes.FooView.template).to.be.an.instanceOf(HTMLElement);
         });
 
         it("should wrap view's template element in view tag", () => {
@@ -80,7 +80,7 @@ describe("View", () => {
                 template: "<div></div>"
             });
 
-            assert.equal(PiJS.classes.FooView.template.tagName, "FOO");
+            expect(PiJS.classes.FooView.template.tagName).to.equal("FOO");
         });
 
         it("should set template's innerHTML to given template string", () => {
@@ -90,17 +90,17 @@ describe("View", () => {
                 template: "<div></div>"
             });
 
-            assert.equal(PiJS.classes.FooView.template.innerHTML, "<div></div>");
+            expect(PiJS.classes.FooView.template.innerHTML).to.equal("<div></div>");
         });
 
         it("should succeed with empty template", () => {
-            assert.doesNotThrow(() => {
+            expect(() => {
                 PiJS.register({
                     name: "FooView",
                     tagName: "foo",
                     template: ""
                 });
-            });
+            }).not.to.throw();
         });
 
         it("should throw on duplicated view name", () => {
@@ -110,13 +110,13 @@ describe("View", () => {
                 template: "<div></div>"
             });
 
-            assert.throws(() => {
+            expect(() => {
                 PiJS.register({
                     name: "FooView",
                     tagName: "foo-2",
                     template: "<span></span>"
                 });
-            }, "PiJS - 'FooView' has already been registered!");
+            }).to.throw("PiJS - 'FooView' has already been registered!");
         });
     });
 
@@ -128,11 +128,11 @@ describe("View", () => {
                 template: "<div></div>"
             });
 
-            assert.isDefined(PiJS.classes.FooView);
+            expect(PiJS.classes.FooView).to.exist;
 
             PiJS.unregister("FooView");
 
-            assert.isUndefined(PiJS.classes.FooView);
+            expect(PiJS.classes.FooView).to.be.undefined;
         });
 
         it("should allow to register same view again", () => {
@@ -144,13 +144,13 @@ describe("View", () => {
 
             PiJS.unregister("FooView");
 
-            assert.doesNotThrow(() => {
+            expect(() => {
                 PiJS.register({
                     name: "FooView",
                     tagName: "foo",
                     template: "<div></div>"
                 });
-            });
+            }).not.to.throw();
         });
     });
 });
