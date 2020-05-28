@@ -99,12 +99,12 @@ class PiJS {
     _createViews($el, parentView) {
         let viewsToCreate = this._parseHTML($el);
 
-        viewsToCreate.forEach((el, index) => {
+        viewsToCreate.forEach(el => {
             let view = new PiView(el.klass);
 
             parentView.addSubview({
                 view: view,
-                index: index
+                index: el.index
             });
         });
     }
@@ -115,10 +115,11 @@ class PiJS {
         for (let klass in this.classes) {
             let els = $el.querySelectorAll(this.classes[klass].tagName);
 
-            els.forEach(el => {
+            els.forEach((el, index) => {
                 viewsToCreate.push({
                     el: el,
-                    klass: this.classes[klass]
+                    klass: this.classes[klass],
+                    index: index
                 });
             });
         }
