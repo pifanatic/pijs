@@ -156,6 +156,12 @@ class PiJS {
     unregister(view) {
         delete this.classes[view];
     }
+
+    _unregisterAll() {
+        for (let c in this.classes) {
+            this.unregister(c);
+        }
+    }
 }
 
 let pijs = new PiJS();

@@ -2,7 +2,7 @@ import PiJS from "../js/pi.js";
 
 describe("View", () => {
     afterEach(() => {
-        PiJS.unregister("FooView");
+        PiJS._unregisterAll();
     });
 
     describe("Registration", () => {

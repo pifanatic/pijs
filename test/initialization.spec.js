@@ -1,6 +1,17 @@
 import PiJS from "../js/pi.js";
 
 describe("Initialization", function() {
+    let el;
+
+    afterEach(() => {
+        PiJS._unregisterAll();
+
+        if (el) {
+            document.body.removeChild(el);
+            el = null;
+        }
+    });
+
     it("should fail without options", () => {
         expect(() => {
             PiJS.init();
@@ -20,7 +31,7 @@ describe("Initialization", function() {
     });
 
     it("should not fail with valid parameters", () => {
-        let el = document.createElement("div");
+        el = document.createElement("div");
         el.setAttribute("id", "foo");
         document.body.appendChild(el);
 
