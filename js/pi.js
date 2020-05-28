@@ -117,7 +117,6 @@ class PiJS {
 
             els.forEach((el, index) => {
                 viewsToCreate.push({
-                    el: el,
                     klass: this.classes[klass],
                     index: index
                 });
