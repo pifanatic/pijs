@@ -1,17 +1,16 @@
 import PiJS from "../js/pi.js";
 
 describe("Render", () => {
-    let el;
+    let el,
+        template,
+        view;
 
     beforeEach(() => {
         el = document.createElement("div");
         el.setAttribute("id", "foo");
+        el.innerHTML = "<foo></foo>";
 
-        PiJS.register({
-            name: "FooView",
-            tagName: "foo",
-            template: "<div> Foobar </div>"
-        });
+        template = "<div> Foobar </div>";
     });
 
     afterEach(() => {
@@ -21,13 +20,19 @@ describe("Render", () => {
     });
 
     function _initPiJS() {
+        PiJS.register({
+            name: "FooView",
+            tagName: "foo",
+            template: template
+        });
+
         document.body.appendChild(el);
         PiJS.init({ el: "#foo" });
+
+        view = PiJS.mainView.subviews[0].view;
     }
 
     it("should render view template", () => {
-        el.innerHTML = "<foo></foo>";
-
         _initPiJS();
 
         expect(el.innerHTML).to.equal("<foo><div> Foobar </div></foo>");
@@ -78,82 +83,55 @@ describe("Render", () => {
     });
 
     it("should replace undefined placeholders correctly", () => {
-        PiJS.register({
-            name: "FooView2",
-            tagName: "foo-2",
-            template: "<div> {{ foobar }} </div>"
-        });
-
-        el.innerHTML = "<foo-2></foo-2>";
+        template = "<div> {{ foobar }} </div>";
 
         _initPiJS();
 
         expect(el.innerHTML).to.equal(
-            "<foo-2><div> undefined </div></foo-2>"
+            "<foo><div> undefined </div></foo>"
         );
     });
 
     it("should replace defined placeholders correctly", () => {
-        PiJS.register({
-            name: "FooView2",
-            tagName: "foo-2",
-            template: "<div> {{ foobar }} </div>",
-            init: function() {
-                this.set("foobar", 69);
-            }
-        });
-
-        el.innerHTML = "<foo-2></foo-2>";
+        template = "<div> {{ foobar }} </div>";
 
         _initPiJS();
 
+        view.set("foobar", 69);
+
         expect(el.innerHTML).to.equal(
-            "<foo-2><div> 69 </div></foo-2>"
+            "<foo><div> 69 </div></foo>"
         );
     });
 
     it("should replace multiple placeholders correctly", () => {
-        PiJS.register({
-            name: "FooView2",
-            tagName: "foo-2",
-            template: "<div> {{ foobar }} </div><span> {{ bazqrr }} {{ foobar }} </span>",
-            init: function() {
-                this.set("foobar", 69);
-                this.set("bazqrr", 42);
-            }
-        });
-
-        el.innerHTML = "<foo-2></foo-2>";
+        template = "<div> {{ foobar }} </div><span> {{ bazqrr }} {{ foobar }} </span>";
 
         _initPiJS();
 
+        view.set("foobar", 69);
+        view.set("bazqrr", 42);
+
         expect(el.innerHTML).to.equal(
-            "<foo-2><div> 69 </div><span> 42 69 </span></foo-2>"
+            "<foo><div> 69 </div><span> 42 69 </span></foo>"
         );
     });
 
     it("should render implicitly after setting an attribute", () => {
-        PiJS.register({
-            name: "FooView2",
-            tagName: "foo-2",
-            template: "<div> {{ foobar }} </div>",
-            init: function() {
-                this.set("foobar", 69);
-            }
-        });
-
-        el.innerHTML = "<foo-2></foo-2>";
+        template = "<div> {{ foobar }} </div>";
 
         _initPiJS();
 
+        view.set("foobar", 69);
+
         expect(el.innerHTML).to.equal(
-            "<foo-2><div> 69 </div></foo-2>"
+            "<foo><div> 69 </div></foo>"
         );
 
-        PiJS.mainView.subviews[0].view.set("foobar", 42);
+        view.set("foobar", 42);
 
         expect(el.innerHTML).to.equal(
-            "<foo-2><div> 42 </div></foo-2>"
+            "<foo><div> 42 </div></foo>"
         );
     });
 });
