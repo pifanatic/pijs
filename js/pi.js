@@ -18,6 +18,8 @@ class PiView {
     render() {
         let $template = this.klass.template.cloneNode(true);
 
+        this._processIf($template);
+
         this._fillPlaceholders($template);
 
         this.subviews.forEach(subview => {
@@ -45,6 +47,18 @@ class PiView {
         this._attributes[attribute] = value;
 
         this.render();
+    }
+
+    _processIf($el) {
+        let els = $el.querySelectorAll("[pi-if]");
+
+        els.forEach(el => {
+            if (!this.get(el.getAttribute("pi-if"))) {
+                $el.removeChild(el);
+            } else {
+                el.removeAttribute("pi-if");
+            }
+        });
     }
 
     _fillPlaceholders($el) {
