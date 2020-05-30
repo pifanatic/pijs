@@ -50,15 +50,15 @@ class PiView {
     }
 
     _processIf($el) {
-        let els = $el.querySelectorAll("[pi-if]");
+        let el;
 
-        els.forEach(el => {
+        while (el = $el.querySelector("[pi-if]")) {
             if (!this.get(el.getAttribute("pi-if"))) {
                 el.remove();
             } else {
                 el.removeAttribute("pi-if");
             }
-        });
+        };
     }
 
     _fillPlaceholders($el) {
