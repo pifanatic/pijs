@@ -46,4 +46,12 @@ describe("If", () => {
 
         expect(view.$el.innerHTML).to.equal("PRE  AFTER");
     });
+
+    it("should also remove deeper nested elements", () => {
+        template = "PRE <div><div pi-if='foo'> Foobar </div></div> AFTER";
+        _initPiJS();
+        view.set("foo", false);
+
+        expect(view.$el.innerHTML).to.equal("PRE <div></div> AFTER");
+    });
 });

@@ -54,7 +54,7 @@ class PiView {
 
         els.forEach(el => {
             if (!this.get(el.getAttribute("pi-if"))) {
-                $el.removeChild(el);
+                el.remove();
             } else {
                 el.removeAttribute("pi-if");
             }
