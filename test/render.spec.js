@@ -116,16 +116,4 @@ describe("Render", () => {
             "<foo><div> 69 </div><span> 42 69 </span></foo>"
         );
     });
-
-    it("should render implicitly after setting an attribute", () => {
-        template = "<div> {{ foobar }} </div>";
-
-        _initPiJS();
-
-        chai.spy.on(view, "render");
-
-        view.set("foobar", 69);
-
-        expect(view.render).to.have.been.called();
-    });
 });

@@ -33,6 +33,14 @@ describe("Get/Set", () => {
 
             expect(view._attributes["foo"]).to.equal("bar");
         });
+
+        it("should render implicitly", () => {
+            chai.spy.on(view, "render");
+
+            view.set("foobar", 69);
+
+            expect(view.render).to.have.been.called();
+        });
     });
 
     describe("Get", () => {
