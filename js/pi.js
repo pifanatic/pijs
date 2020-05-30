@@ -44,7 +44,11 @@ class PiView {
     }
 
     set(attribute, value) {
-        this._attributes[attribute] = value;
+        if (typeof attribute === "object") {
+            Object.assign(this._attributes, attribute);
+        } else {
+            this._attributes[attribute] = value;
+        }
 
         this.render();
     }

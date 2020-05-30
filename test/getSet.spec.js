@@ -34,6 +34,27 @@ describe("Get/Set", () => {
             expect(view._attributes["foo"]).to.equal("bar");
         });
 
+        it("should allow to set multiple values at once", () => {
+            view.set({
+                foo: "bar",
+                baz: "qrr"
+            });
+
+            expect(view._attributes["foo"]).to.equal("bar");
+            expect(view._attributes["baz"]).to.equal("qrr");
+        });
+
+        it("should only render once when setting multiple values", () => {
+            chai.spy.on(view, "render");
+
+            view.set({
+                foo: "bar",
+                baz: "qrr"
+            });
+
+            expect(view.render).to.have.been.called.once;
+        });
+
         it("should render implicitly", () => {
             chai.spy.on(view, "render");
 
