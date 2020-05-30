@@ -122,16 +122,10 @@ describe("Render", () => {
 
         _initPiJS();
 
+        chai.spy.on(view, "render");
+
         view.set("foobar", 69);
 
-        expect(el.innerHTML).to.equal(
-            "<foo><div> 69 </div></foo>"
-        );
-
-        view.set("foobar", 42);
-
-        expect(el.innerHTML).to.equal(
-            "<foo><div> 42 </div></foo>"
-        );
+        expect(view.render).to.have.been.called();
     });
 });
