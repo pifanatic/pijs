@@ -40,9 +40,25 @@ describe("If", () => {
         expect(view.$el.innerHTML).to.equal("PRE <div> Foobar </div> AFTER");
     });
 
+    it("should render element if negated condition yields true", () => {
+        template = "PRE <div pi-if='!foo'> Foobar </div> AFTER";
+        _initPiJS();
+        view.set("foo", false);
+
+        expect(view.$el.innerHTML).to.equal("PRE <div> Foobar </div> AFTER");
+    });
+
     it("should not render element if condition yields false", () => {
         _initPiJS();
         view.set("foo", false);
+
+        expect(view.$el.innerHTML).to.equal("PRE  AFTER");
+    });
+
+    it("should not render element if negated condition yields false", () => {
+        template = "PRE <div pi-if='!foo'> Foobar </div> AFTER";
+        _initPiJS();
+        view.set("foo", true);
 
         expect(view.$el.innerHTML).to.equal("PRE  AFTER");
     });

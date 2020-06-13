@@ -57,7 +57,16 @@ class PiView {
         let el;
 
         while (el = $el.querySelector("[pi-if]")) {
-            if (this.get(el.getAttribute("pi-if"))) {
+            let attr = el.getAttribute("pi-if"),
+                negated = false,
+                negationMatch = attr.match(/^!(.*)$/);
+
+            if (negationMatch) {
+                attr = negationMatch[1];
+                negated = true;
+            }
+
+            if (this.get(attr) && !negated || !this.get(attr) && negated) {
                 el.removeAttribute("pi-if");
             } else {
                 el.remove();
