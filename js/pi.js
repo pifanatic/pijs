@@ -57,10 +57,10 @@ class PiView {
         let el;
 
         while (el = $el.querySelector("[pi-if]")) {
-            if (!this.get(el.getAttribute("pi-if"))) {
-                el.remove();
-            } else {
+            if (this.get(el.getAttribute("pi-if"))) {
                 el.removeAttribute("pi-if");
+            } else {
+                el.remove();
             }
         };
     }
