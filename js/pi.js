@@ -79,10 +79,12 @@ class PiView {
             match;
 
         while (match = $el.innerHTML.match(regex)) {
-            let _f = new Function(`return ${match[1]};`);
+            let outerMatch = match[0],
+                innerMatch = match[1],
+                _f = new Function(`return ${innerMatch};`);
 
             $el.innerHTML = $el.innerHTML.replace(
-                match[0],
+                outerMatch,
                 _f.call(this)
             );
         }
