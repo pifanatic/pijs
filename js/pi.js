@@ -75,13 +75,15 @@ class PiView {
     }
 
     _fillPlaceholders($el) {
-        let regex = /\{\{\s*(\w*)\s*\}\}/,
+        let regex = /\{\{(.*?)\}\}/,
             match;
 
         while (match = $el.innerHTML.match(regex)) {
+            let _f = new Function(`return ${match[1]};`);
+
             $el.innerHTML = $el.innerHTML.replace(
                 match[0],
-                this.get(match[1])
+                _f.call(this)
             );
         }
     }

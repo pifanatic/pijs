@@ -83,7 +83,7 @@ describe("Render", () => {
     });
 
     it("should replace undefined placeholders correctly", () => {
-        template = "<div> {{ foobar }} </div>";
+        template = "<div> {{ this.get('foobar') }} </div>";
 
         _initPiJS();
 
@@ -93,7 +93,7 @@ describe("Render", () => {
     });
 
     it("should replace defined placeholders correctly", () => {
-        template = "<div> {{ foobar }} </div>";
+        template = "<div> {{ this.get('foobar') }} </div>";
 
         _initPiJS();
 
@@ -105,7 +105,8 @@ describe("Render", () => {
     });
 
     it("should replace multiple placeholders correctly", () => {
-        template = "<div> {{ foobar }} </div><span> {{ bazqrr }} {{ foobar }} </span>";
+        template = "<div> {{ this.get('foobar') }} </div>" +
+                   "<span> {{ this.get('bazqrr') }} {{ this.get('foobar') }} </span>";
 
         _initPiJS();
 
@@ -114,6 +115,18 @@ describe("Render", () => {
 
         expect(el.innerHTML).to.equal(
             "<foo><div> 69 </div><span> 42 69 </span></foo>"
+        );
+    });
+
+    it("should evaluate expression", () => {
+        template = "<div> {{ this.get('foobar') + 42 }} </div>";
+
+        _initPiJS();
+
+        view.set("foobar", 42);
+
+        expect(el.innerHTML).to.equal(
+            "<foo><div> 84 </div></foo>"
         );
     });
 });
