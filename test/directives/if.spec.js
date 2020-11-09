@@ -10,7 +10,7 @@ describe("If", () => {
         el.setAttribute("id", "foo");
         el.innerHTML = "<foo></foo>";
 
-        template = "PRE <div pi-if='foo'> Foobar </div> AFTER";
+        template = `PRE <div pi-if='this.get("foo")'> Foobar </div> AFTER`;
     });
 
     afterEach(() => {
@@ -41,7 +41,7 @@ describe("If", () => {
     });
 
     it("should render element if negated condition yields true", () => {
-        template = "PRE <div pi-if='!foo'> Foobar </div> AFTER";
+        template = `PRE <div pi-if='!this.get("foo")'> Foobar </div> AFTER`;
         _initPiJS();
         view.set("foo", false);
 
@@ -56,15 +56,31 @@ describe("If", () => {
     });
 
     it("should not render element if negated condition yields false", () => {
-        template = "PRE <div pi-if='!foo'> Foobar </div> AFTER";
+        template = `PRE <div pi-if='!this.get("foo")'> Foobar </div> AFTER`;
         _initPiJS();
         view.set("foo", true);
 
         expect(view.$el.innerHTML).to.equal("PRE  AFTER");
     });
 
+    it("should handle more complex conditions when they yield true", () => {
+        template = `PRE <div pi-if='this.get("count") > 42'> Foobar </div> AFTER`;
+        _initPiJS();
+        view.set("count", 69);
+
+        expect(view.$el.innerHTML).to.equal("PRE <div> Foobar </div> AFTER");
+    });
+
+    it("should handle more complex conditions when they yield false", () => {
+        template = `PRE <div pi-if='this.get("count") < 42'> Foobar </div> AFTER`;
+        _initPiJS();
+        view.set("count", 69);
+
+        expect(view.$el.innerHTML).to.equal("PRE  AFTER");
+    });
+
     it("should also remove deeper nested elements", () => {
-        template = "PRE <div><div pi-if='foo'> Foobar </div></div> AFTER";
+        template = `PRE <div><div pi-if='this.get("foo")'> Foobar </div></div> AFTER`;
         _initPiJS();
         view.set("foo", false);
 
