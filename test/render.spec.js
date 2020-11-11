@@ -1,4 +1,5 @@
 import PiJS from "../js/pi.js";
+import Utils from "../js/utils.js";
 
 describe("Render", () => {
     let el,
@@ -128,5 +129,24 @@ describe("Render", () => {
         expect(el.innerHTML).to.equal(
             "<foo><div> 84 </div></foo>"
         );
+    });
+
+    it("should escape the values", () => {
+        chai.spy.on(Utils, "escape", () => {
+            return "ESCAPED VALUE";
+        });
+
+        template = "<div> {{ this.get('foobar') }} </div>";
+
+        _initPiJS();
+
+        view.set("foobar", 42);
+
+        expect(Utils.escape).to.have.been.called.with(42);
+        expect(el.innerHTML).to.equal(
+            "<foo><div> ESCAPED VALUE </div></foo>"
+        );
+
+        chai.spy.restore(Utils, "escape");
     });
 });

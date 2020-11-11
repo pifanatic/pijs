@@ -1,3 +1,4 @@
+import Utils from "./utils.js";
 
 class PiView {
     constructor(klass) {
@@ -79,7 +80,7 @@ class PiView {
 
             $el.innerHTML = $el.innerHTML.replace(
                 outerMatch,
-                _f.call(this)
+                Utils.escape(_f.call(this))
             );
         }
     }
