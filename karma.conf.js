@@ -7,17 +7,12 @@ module.exports = function(config) {
                 type: "module"
             },
             {
-                pattern: "src/pi.js",
-                type: "module"
-            },
-            {
-                pattern: "src/utils.js",
+                pattern: "src/*.js",
                 type: "module"
             }
         ],
         preprocessors: {
-            "src/pi.js": ["coverage"],
-            "src/utils.js": ["coverage"]
+            "src/*.js": ["coverage"]
         },
         reporters: ["progress", "coverage"],
         coverageReporter: {
