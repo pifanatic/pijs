@@ -9,10 +9,15 @@ module.exports = function(config) {
             {
                 pattern: "js/pi.js",
                 type: "module"
+            },
+            {
+                pattern: "js/utils.js",
+                type: "module"
             }
         ],
         preprocessors: {
-            "js/pi.js": ["coverage"]
+            "js/pi.js": ["coverage"],
+            "js/utils.js": ["coverage"]
         },
         reporters: ["progress", "coverage"],
         coverageReporter: {
