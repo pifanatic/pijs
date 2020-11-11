@@ -1,4 +1,4 @@
-import PiJS from "../js/pi.js";
+import PiJS from "../src/pi.js";
 
 describe("View Initialization", function() {
     let el,

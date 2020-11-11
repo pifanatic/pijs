@@ -1,4 +1,4 @@
-import Utils from "../js/utils.js";
+import Utils from "../src/utils.js";
 
 describe("Escape", function() {
     it("should handle '<' correctly", () => {

@@ -1,5 +1,5 @@
-import PiJS from "../js/pi.js";
-import Utils from "../js/utils.js";
+import PiJS from "../src/pi.js";
+import Utils from "../src/utils.js";
 
 describe("Render", () => {
     let el,
