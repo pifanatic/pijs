@@ -33,6 +33,14 @@ describe("Escape", function() {
         expect(Utils.escape(42)).to.equal("42");
     });
 
+    it("should handle empty string correctly", () => {
+        expect(Utils.escape("")).to.equal("");
+    });
+
+    it("should handle 0 correctly", () => {
+        expect(Utils.escape(0)).to.equal("0");
+    });
+
     it("should stringify boolean values", () => {
         expect(Utils.escape(true)).to.equal("true");
     });

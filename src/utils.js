@@ -9,7 +9,7 @@
  * @throws if argument cannot be stringified
  */
 function escape(str) {
-    if (!str) {
+    if (str === undefined || str === null) {
         return undefined;
     }
 
