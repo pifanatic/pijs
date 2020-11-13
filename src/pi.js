@@ -104,6 +104,4 @@ class PiJS {
     }
 }
 
-let pijs = new PiJS();
-
-export default pijs;
+export default new PiJS();
